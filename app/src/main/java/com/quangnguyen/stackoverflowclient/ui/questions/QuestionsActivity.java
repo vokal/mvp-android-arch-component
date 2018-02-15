@@ -11,20 +11,22 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.TextView;
+import android.widget.EditText;
+
+import java.util.ArrayList;
+import java.util.List;
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.quangnguyen.stackoverflowclient.R;
 import com.quangnguyen.stackoverflowclient.data.model.Question;
 import com.quangnguyen.stackoverflowclient.ui.base.BaseActivity;
-import java.util.ArrayList;
-import java.util.List;
-import javax.inject.Inject;
 
 public class QuestionsActivity extends BaseActivity implements QuestionsContract.View {
   @BindView(R.id.recycler_question) RecyclerView questionRecyclerView;
   @BindView(R.id.refresh) SwipeRefreshLayout refreshLayout;
-  @BindView(R.id.text_notification) TextView notificationText;
+  @BindView(R.id.text_notification) EditText notificationText;
 
   private QuestionAdapter adapter;
   @Inject QuestionsPresenter presenter;
