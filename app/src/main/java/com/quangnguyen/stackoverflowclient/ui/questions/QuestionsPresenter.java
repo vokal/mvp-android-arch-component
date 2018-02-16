@@ -61,7 +61,7 @@ public class QuestionsPresenter implements QuestionsContract.Presenter, Lifecycl
 
     // Load new one and populate it into view
     Disposable disposable = repository.loadQuestions(onlineRequired)
-        .subscribeOn(ioScheduler)
+        .subscribeOn(uiScheduler)
         .observeOn(uiScheduler)
         .subscribe(this::handleReturnedData, this::handleError, () -> view.stopLoadingIndicator());
     disposeBag.add(disposable);
@@ -70,7 +70,7 @@ public class QuestionsPresenter implements QuestionsContract.Presenter, Lifecycl
   @Override public void getQuestion(long questionId) {
     Disposable disposable = repository.getQuestion(questionId)
         .filter(question -> question != null)
-        .subscribeOn(ioScheduler)
+        .subscribeOn(uiScheduler)
         .observeOn(uiScheduler)
         .subscribe(question -> view.showQuestionDetail(question));
     disposeBag.add(disposable);
@@ -84,7 +84,7 @@ public class QuestionsPresenter implements QuestionsContract.Presenter, Lifecycl
         .filter(question -> question.getTitle().toLowerCase().contains(questionTitle.toLowerCase()))
         .toList()
         .toFlowable()
-        .subscribeOn(ioScheduler)
+        .subscribeOn(uiScheduler)
         .observeOn(uiScheduler)
         .subscribe(questions -> {
           if (questions.isEmpty()) {
