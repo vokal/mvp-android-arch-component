@@ -1,6 +1,7 @@
 package com.quangnguyen.stackoverflowclient.data.repository.local;
 
 import com.quangnguyen.stackoverflowclient.data.database.QuestionDao;
+import com.quangnguyen.stackoverflowclient.data.model.Answer;
 import com.quangnguyen.stackoverflowclient.data.model.Question;
 import com.quangnguyen.stackoverflowclient.data.repository.QuestionDataSource;
 import io.reactivex.Flowable;
@@ -19,6 +20,11 @@ public class QuestionLocalDataSource implements QuestionDataSource {
   @Override
   public Flowable<List<Question>> loadQuestions(boolean forceRemote) {
     return questionDao.getAllQuestions();
+  }
+
+  @Override
+  public Flowable<List<Answer>> loadAnswers(long questionID) {
+    throw new UnsupportedOperationException();
   }
 
   @Override

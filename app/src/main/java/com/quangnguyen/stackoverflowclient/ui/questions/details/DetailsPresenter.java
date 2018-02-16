@@ -9,6 +9,7 @@ import com.quangnguyen.stackoverflowclient.util.schedulers.RunOn;
 
 import javax.inject.Inject;
 
+import io.reactivex.Flowable;
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -72,6 +73,19 @@ public class DetailsPresenter implements DetailsContract.Presenter, LifecycleObs
 //                    view.setQuestionComments(); // TODO
 //                    view.setQuestionAnswers(…);
                 }, error -> Timber.e(error, "ERROR: getting question by ID (%d)", questionId));
+
+        disposeBag.add(disposable);
+
+        disposable = repository.loadAnswers(questionId)
+                .subscribeOn(ioScheduler)
+                .observeOn(uiScheduler)
+                .flatMap(Flowable::fromIterable)
+                .doOnNext(answer -> {
+                    Timber.d(answer.title);
+                })
+                .subscribe(answers -> {
+                    // TODO
+                }, error -> Timber.e(error, "ERROR: getting answers (question_id=%d)", questionId));
 
         disposeBag.add(disposable);
     }

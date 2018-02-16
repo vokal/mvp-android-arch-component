@@ -3,6 +3,7 @@ package com.quangnguyen.stackoverflowclient.data.repository.remote;
 import com.quangnguyen.stackoverflowclient.data.Config;
 import com.quangnguyen.stackoverflowclient.data.api.QuestionResponse;
 import com.quangnguyen.stackoverflowclient.data.api.QuestionService;
+import com.quangnguyen.stackoverflowclient.data.model.Answer;
 import com.quangnguyen.stackoverflowclient.data.model.Question;
 import com.quangnguyen.stackoverflowclient.data.repository.QuestionDataSource;
 import io.reactivex.Flowable;
@@ -20,6 +21,11 @@ public class QuestionRemoteDataSource implements QuestionDataSource {
   @Override
   public Flowable<List<Question>> loadQuestions(boolean forceRemote) {
     return questionService.loadQuestionsByTag(Config.ANDROID_QUESTION_TAG).map(QuestionResponse::getQuestions);
+  }
+
+  @Override
+  public Flowable<List<Answer>> loadAnswers(long questionID) {
+    return questionService.loadAnswersByQuestionId(questionID).map(answersResponse -> answersResponse.answers);
   }
 
   @Override
