@@ -78,7 +78,7 @@ public class QuestionsPresenter implements QuestionsContract.Presenter, Lifecycl
 
   @Override public void search(final String questionTitle) {
     // Load new one and populate it into view
-    Disposable disposable = repository.loadQuestions(false)
+    Disposable disposable = repository.loadQuestions(true)
         .flatMap(Flowable::fromIterable)
         .filter(question -> question.getTitle() != null)
         .filter(question -> question.getTitle().toLowerCase().contains(questionTitle.toLowerCase()))
