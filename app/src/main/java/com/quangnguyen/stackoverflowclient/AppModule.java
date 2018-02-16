@@ -2,9 +2,10 @@ package com.quangnguyen.stackoverflowclient;
 
 import android.app.Application;
 import android.content.Context;
-import dagger.Module;
-import dagger.Provides;
+
 import javax.inject.Singleton;
+
+import dagger.Module;
 
 @Module
 public class AppModule {
@@ -14,7 +15,6 @@ public class AppModule {
     this.context = context;
   }
 
-  @Provides
   @Singleton
   public Context provideContext() {
     return context;
