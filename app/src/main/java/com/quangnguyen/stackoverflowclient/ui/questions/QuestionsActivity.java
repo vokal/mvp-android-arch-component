@@ -17,6 +17,8 @@ import butterknife.ButterKnife;
 import com.quangnguyen.stackoverflowclient.R;
 import com.quangnguyen.stackoverflowclient.data.model.Question;
 import com.quangnguyen.stackoverflowclient.ui.base.BaseActivity;
+import com.quangnguyen.stackoverflowclient.ui.questions.details.DetailsActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -108,7 +110,8 @@ public class QuestionsActivity extends BaseActivity implements QuestionsContract
   }
 
   @Override public void showQuestionDetail(Question question) {
-    Intent intent = new Intent(Intent.ACTION_VIEW);
+    Intent intent = new Intent(this, DetailsActivity.class);
+    intent.putExtra(DetailsActivity.EXTRA_QUESTION_ID, question.getId());
     intent.setData(Uri.parse(question.getLink()));
     startActivity(intent);
   }
