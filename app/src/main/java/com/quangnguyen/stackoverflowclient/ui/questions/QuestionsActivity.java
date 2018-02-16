@@ -4,14 +4,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
+import android.support.v7.widget.*;
 import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
+import android.widget.Toolbar;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.quangnguyen.stackoverflowclient.R;
@@ -24,9 +23,10 @@ import java.util.List;
 import javax.inject.Inject;
 
 public class QuestionsActivity extends BaseActivity implements QuestionsContract.View {
-  @BindView(R.id.recycler_question) RecyclerView questionRecyclerView;
-  @BindView(R.id.refresh) SwipeRefreshLayout refreshLayout;
-  @BindView(R.id.text_notification) TextView notificationText;
+  @BindView(R.id.toolbar)           Toolbar            toolbar;
+  @BindView(R.id.recycler_question) RecyclerView       questionRecyclerView;
+  @BindView(R.id.refresh)           SwipeRefreshLayout refreshLayout;
+  @BindView(R.id.text_notification) TextView           notificationText;
 
   private QuestionAdapter adapter;
   @Inject QuestionsPresenter presenter;
@@ -35,6 +35,7 @@ public class QuestionsActivity extends BaseActivity implements QuestionsContract
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
+    setActionBar(toolbar);
     initializePresenter();
     setTitle(getString(R.string.android_tag));
     setupWidgets();
