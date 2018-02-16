@@ -4,27 +4,29 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
+import android.support.v7.widget.*;
 import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
+import android.widget.Toolbar;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.quangnguyen.stackoverflowclient.R;
 import com.quangnguyen.stackoverflowclient.data.model.Question;
 import com.quangnguyen.stackoverflowclient.ui.base.BaseActivity;
+import com.quangnguyen.stackoverflowclient.ui.questions.details.DetailsActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 
 public class QuestionsActivity extends BaseActivity implements QuestionsContract.View {
-  @BindView(R.id.recycler_question) RecyclerView questionRecyclerView;
-  @BindView(R.id.refresh) SwipeRefreshLayout refreshLayout;
-  @BindView(R.id.text_notification) TextView notificationText;
+  @BindView(R.id.toolbar)           Toolbar            toolbar;
+  @BindView(R.id.recycler_question) RecyclerView       questionRecyclerView;
+  @BindView(R.id.refresh)           SwipeRefreshLayout refreshLayout;
+  @BindView(R.id.text_notification) TextView           notificationText;
 
   private QuestionAdapter adapter;
   @Inject QuestionsPresenter presenter;
@@ -33,6 +35,7 @@ public class QuestionsActivity extends BaseActivity implements QuestionsContract
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
+    setActionBar(toolbar);
     initializePresenter();
     setTitle(getString(R.string.android_tag));
     setupWidgets();
@@ -108,7 +111,8 @@ public class QuestionsActivity extends BaseActivity implements QuestionsContract
   }
 
   @Override public void showQuestionDetail(Question question) {
-    Intent intent = new Intent(Intent.ACTION_VIEW);
+    Intent intent = new Intent(this, DetailsActivity.class);
+    intent.putExtra(DetailsActivity.EXTRA_QUESTION_ID, question.getId());
     intent.setData(Uri.parse(question.getLink()));
     startActivity(intent);
   }
